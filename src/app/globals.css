@@ -1,26 +1,411 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  /* status colors */
+  --color-status-active: var(--status-active);
+  --color-status-inactive: var(--status-inactive);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: oklch(1.00 0 0);
+  --foreground: oklch(0.14 0.00 285.82);
+  --card: oklch(1.00 0 0);
+  --card-foreground: oklch(0.14 0.00 285.82);
+  --popover: oklch(1.00 0 0);
+  --popover-foreground: oklch(0.14 0.00 285.82);
+  --primary: oklch(0.25 0.15 264.98);
+  --primary-foreground: oklch(1.00 0 0);
+  --secondary: oklch(0.25 0.15 264.98);
+  --secondary-foreground: oklch(1.00 0 0);
+  --muted: oklch(0.97 0.00 286.38);
+  --muted-foreground: oklch(0.48 0.003 283.53);
+  --accent: oklch(0.96 0.02 286.02);
+  --accent-foreground: oklch(0.14 0.00 285.82);
+  --destructive: oklch(0.14 0.00 285.82);
+  --destructive-foreground: oklch(1.00 0 0);
+  --border: oklch(0.92 0.00 286.32);
+  --input: oklch(0.92 0.00 286.32);
+  --ring: oklch(0.92 0.00 286.32);
+  --chart-1: oklch(0.25 0.15 264.98);
+  --chart-2: oklch(0.25 0.15 264.98);
+  --chart-3: oklch(0.25 0.15 264.98);
+  --chart-4: oklch(0.25 0.15 264.98);
+  --chart-5: oklch(0.92 0.10 116.71);
+  --sidebar: oklch(1.00 0 0);
+  --sidebar-foreground: oklch(0.14 0.00 285.82);
+  --sidebar-primary: oklch(0.25 0.15 264.98);
+  --sidebar-primary-foreground: oklch(0.14 0.00 285.82);
+  --sidebar-accent: oklch(0.98 0 0);
+  --sidebar-accent-foreground: oklch(0.55 0.01 285.94);
+  --sidebar-border: oklch(0.94 0 0);
+  --sidebar-ring: oklch(0.77 0 0);
+  --font-sans: Poppins, sans-serif;
+  --font-serif: Poppins, sans-serif;
+  --font-mono: Poppins, sans-serif;
+  --radius: 0.25rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(240 5.88% 90% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(240 5.88% 90% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 1px 2px -1px hsl(240 5.88% 90% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 1px 2px -1px hsl(240 5.88% 90% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 2px 4px -1px hsl(240 5.88% 90% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 4px 6px -1px hsl(240 5.88% 90% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 8px 10px -1px hsl(240 5.88% 90% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(240 5.88% 90% / 0.25);
+
+   /* status colors */
+   --status-active: #008844;
+   --status-inactive: #E68B1C;
+}
+
+.dark {
+  --background: oklch(0.14 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.14 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.14 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.98 0 0);
+  --primary-foreground: oklch(0.21 0.01 285.53);
+  --secondary: oklch(0.27 0.01 285.77);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.27 0.01 285.77);
+  --muted-foreground: oklch(0.71 0.01 286.14);
+  --accent: oklch(0.27 0.01 285.77);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.40 0.13 25.80);
+  --destructive-foreground: oklch(0.97 0.01 17.32);
+  --border: oklch(0.27 0.01 285.77);
+  --input: oklch(0.27 0.01 285.77);
+  --ring: oklch(0.87 0.01 286.17);
+  --chart-1: oklch(0.25 0.15 264.98);
+  --chart-2: oklch(0.25 0.15 264.98);
+  --chart-3: oklch(0.25 0.15 264.98);
+  --chart-4: oklch(0.25 0.15 264.98);
+  --chart-5: oklch(0.92 0.10 116.71);
+  --sidebar: oklch(0.21 0.01 285.53);
+  --sidebar-foreground: oklch(0.97 0 0);
+  --sidebar-primary: oklch(0.49 0.22 264.43);
+  --sidebar-primary-foreground: oklch(1.00 0 0);
+  --sidebar-accent: oklch(0.27 0.01 285.77);
+  --sidebar-accent-foreground: oklch(0.97 0 0);
+  --sidebar-border: oklch(0.27 0.01 285.77);
+  --sidebar-ring: oklch(0.87 0.01 286.17);
+  --font-sans: Poppins, sans-serif;
+  --font-serif: Poppins, sans-serif;
+  --font-mono: Poppins, sans-serif;
+  --radius: 0.4rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+   /* status colors */
+   --status-active: #008844;
+   --status-inactive: #E68B1C;
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.section-padding {
+  @apply px-4 md:px-6 lg:px-8 xl:px-10;
+}
+
+
+/* media queries */
+@media (width >= 96rem /* 1536px */) {
+  .container {
+    max-width: 87.5rem /* 1400px */;
+  }
+}
+
+
+
+
+/* ------------------ TABLE STYLES ------------------ */
+
+/* Custom cursor pointer for interactive elements in the data table */
+button,
+.rdp-button,
+.rdp-day,
+select,
+input[type="checkbox"],
+input[type="radio"],
+[role="button"],
+[role="tab"],
+.react-day-picker button,
+[data-slot="select-trigger"],
+[data-slot="checkbox"],
+.day-range-start,
+.day-range-end,
+.day-range-middle,
+[data-radix-collection-item],
+[data-slot="button"],
+[data-slot="day"],
+[data-slot="select-item"] {
+  cursor: pointer !important;
+}
+
+/* Fix specifically for calendar date picker buttons and elements */
+.rdp-button,
+.rdp-nav_button,
+.rdp-month-dropdown-button,
+.rdp-dropdown_option,
+[data-testid="rdp-nav-button-previous"],
+[data-testid="rdp-nav-button-next"],
+[data-slot="day"],
+[data-slot="day_button"],
+[data-slot="day_selected"],
+[data-slot="day_range"],
+[data-slot="day_today"],
+[data-slot="day_outside"],
+[data-slot="day_disabled"],
+[data-slot="day_hidden"],
+.day-outside,
+.day-range-start,
+.day-range-end,
+.day-selected,
+div[data-testid="calendar"] button {
+  cursor: pointer !important;
+}
+
+/* Fix for pagination buttons and components */
+/* .flex-1 button,
+.h-8.w-8.p-0,
+nav button,
+[data-state="active"],
+[data-state="inactive"],
+[data-orientation="horizontal"],
+[data-orientation="vertical"] {
+  cursor: pointer !important;
+} */
+
+/* Fixes for Select elements and dropdowns */
+[data-radix-select-trigger],
+[data-radix-popper-content-wrapper] *,
+[data-state="open"] *,
+[data-radix-collection-item],
+[data-value],
+[role="combobox"],
+[role="listbox"],
+[role="option"] {
+  cursor: pointer !important;
+}
+
+/* Fix for checkbox in table rows and other inputs */
+[data-state="checked"],
+[data-state="unchecked"],
+[data-state="indeterminate"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="time"],
+input[type="week"] {
+  cursor: pointer !important;
+}
+
+/* Fix for calendar date picker component specifically */
+[id^="calendar-date-picker"],
+[id^="calendar-date-picker"] *,
+[id="rdp-1"],
+[id="rdp-1"] *,
+[id="rdp-2"],
+[id="rdp-2"] * {
+  cursor: pointer !important;
+}
+
+/* Table column resizer styles */
+@layer components {
+  .resizer {
+    @apply absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none touch-none opacity-0 hover:opacity-100 hover:bg-primary/50 group-hover:block;
+  }
+
+  .resizer.isResizing {
+    @apply opacity-100 bg-primary;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .resizable-table {
+    @apply table-fixed relative;
+  }
+
+  .resizable-table th {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .resizable-table th,
+  .resizable-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Table column resizing styles - ENHANCED VERSION */
+@layer components {
+
+  /* Prevent layout shifts during resize */
+  .resizable-table {
+    table-layout: fixed;
+    width: 100%;
+    will-change: contents;
+  }
+
+  /* Use hardware acceleration for smoother transitions */
+  .resizable-table th {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transition: width 0ms linear;
+  }
+
+  /* Prevent text selection when resizing */
+  body[data-resizing="true"] {
+    cursor: col-resize !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    touch-action: none !important;
+    pointer-events: none !important;
+  }
+
+  body[data-resizing="true"] * {
+    cursor: col-resize !important;
+  }
+
+  /* Remove transition during active resize for instant feedback */
+  .resizable-table th[data-column-resizing="true"] {
+    transition: none !important;
+  }
+
+  /* Better hover interaction for resize handles */
+  .resizable-table th:hover [data-resizing] {
+    opacity: 0.8;
+  }
+
+  /* Enhanced visual feedback during resize */
+  .resizable-table [data-resizing="true"] {
+    opacity: 1 !important;
+  }
+}
+
+/* Custom cursor for column resizing */
+@layer components {
+
+  /* Better cursor for column resize */
+  .cursor-col-resize {
+    cursor: col-resize;
+  }
+
+  /* Apply the cursor to the resize handle and its children */
+  [data-resizing],
+  [data-resizing] * {
+    cursor: col-resize !important;
+  }
+
+  /* Ensure the resize handle is always on top */
+  [data-resizing] {
+    z-index: 10;
+  }
+}
+
+/* Custom hover and interaction styles for the resizer */
+@layer components {
+
+  /* Resize handle hover effects */
+  .resizable-table [data-resizing] {
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+
+  .resizable-table [data-resizing]:hover {
+    transform: scaleX(1.5);
+    opacity: 1 !important;
+  }
+
+  /* Active state during resize */
+  .resizable-table [data-resizing="true"] {
+    transform: scaleX(1.5) !important;
+  }
+
+  /* Ensure the grip icon is positioned correctly */
+  .resizable-table [data-resizing] svg {
+    transition: opacity 0.15s ease, color 0.15s ease;
+  }
+
+  .resizable-table [data-resizing]:hover svg {
+    opacity: 1 !important;
+    color: hsl(var(--primary)) !important;
+  }
 }

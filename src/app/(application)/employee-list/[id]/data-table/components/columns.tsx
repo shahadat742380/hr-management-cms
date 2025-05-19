@@ -16,7 +16,6 @@ import { Employee } from "../dummy-data";
 // ** Import Table Row Actions
 import { DataTableRowActions } from "./row-actions";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 
 export const getColumns = (
   handleRowDeselection: ((rowId: string) => void) | null | undefined
@@ -137,38 +136,76 @@ export const getColumns = (
       ),
       cell: ({ row }) => {
         const status = row.getValue("status") as string;
-        const badgeColor =
-          status === "Active"
-            ? "bg-status-active text-white"
-            : "bg-status-inactive text-white";
+        let badgeColor = "";
+        switch (status) {
+          case "Present":
+            badgeColor = "bg-green-600 text-white";
+            break;
+          case "Absent(CL)":
+            badgeColor = "bg-yellow-500 text-white";
+            break;
+          case "Absent(SL)":
+            badgeColor = "bg-blue-500 text-white";
+            break;
+          case "Absent(EL)":
+            badgeColor = "bg-purple-500 text-white";
+            break;
+          case "Absent(LOP)":
+            badgeColor = "bg-red-600 text-white";
+            break;
+          default:
+            badgeColor = "bg-gray-400 text-white";
+        }
         return (
           <div
             className={cn(
               badgeColor,
-              "w-24 px-2 !text-center py-2 text-sm font-medium"
+              "w-28 px-2 !text-center py-2 text-sm font-medium rounded flex items-center justify-center gap-2"
             )}
           >
             {status}
           </div>
         );
       },
-      size: 140,
+      size: 160,
+    },
+    {
+      accessorKey: "verificationStatus",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Verification Status" />
+      ),
+      cell: ({ row }) => {
+        const verificationStatus = row.getValue("verificationStatus") as string;
+        const badgeColor =
+          verificationStatus === "Verified"
+            ? "bg-green-400 text-white"
+            : "bg-red-500 text-white";
+        return (
+          <div
+            className={cn(
+              badgeColor,
+              "w-28 px-2 !text-center py-2 text-sm font-medium rounded flex items-center justify-center gap-2"
+            )}
+          >
+            {verificationStatus}
+          </div>
+        );
+      },
+      size: 160,
     },
     {
       id: "view",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="View" />
       ),
-      cell: ({ row }) => {
+      cell: () => {
         return (
-          <Link href={`/employee-list/${row.original.id}`}>
-            <Button
-              size="sm"
-              className="bg-primary text-primary-foreground px-5 font-semibold"
-            >
-              View
-            </Button>
-          </Link>
+          <Button
+            size="sm"
+            className="bg-primary text-primary-foreground px-5 font-semibold"
+          >
+            View
+          </Button>
         );
       },
       size: 120,

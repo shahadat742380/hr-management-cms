@@ -52,13 +52,7 @@ export function DataTableRowActions<TData>({
           <DropdownMenuItem onClick={() => setDeleteDialogOpen(true)}>
             Delete
           </DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
-            <DropdownMenuSubContent>
-              <DropdownMenuItem>Active</DropdownMenuItem>
-              <DropdownMenuItem>Inactive</DropdownMenuItem>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
+        
         </DropdownMenuContent>
       </DropdownMenu>
 

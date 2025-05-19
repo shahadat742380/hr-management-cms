@@ -42,6 +42,7 @@ export const ToolbarOptions = ({
       <Link href="/add-employee">
         <Button><CirclePlus className="mr-2 size-4" /> Add New</Button>
       </Link>
+       
 
       {selectionCount > 0 && (
         <>
@@ -58,9 +59,9 @@ export const ToolbarOptions = ({
             open={deleteDialogOpen}
             onOpenChange={setDeleteDialogOpen}
             fileName={"Employee List"}
+              // Optionally: handle file removal here
             onDelete={() => {
               setDeleteDialogOpen(false);
-              // Optionally: handle file removal here
             }}
           />
         </>

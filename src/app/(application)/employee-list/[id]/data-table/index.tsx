@@ -9,7 +9,7 @@ import { useExportConfig } from "./utils/config";
 import { useEmployeesData } from "./utils/data-fetching";
 import { Employee } from "./dummy-data";
 
-const EmployeeListTable = () => {
+const EmployeeTable = () => {
   return (
     <DataTable<Employee, unknown>
       getColumns={getColumns}
@@ -42,10 +42,10 @@ const EmployeeListTable = () => {
         enableColumnVisibility: true,
         enableUrlState: true,
         size: "default",
-        columnResizingTableId: "employees-table",
+        columnResizingTableId: "employee-table",
       }}
     />
   );
 };
 
-export default EmployeeListTable;
+export default EmployeeTable;

@@ -58,6 +58,10 @@
   /* status colors */
   --color-status-active: var(--status-active);
   --color-status-inactive: var(--status-inactive);
+  --color-status-not-verified: var(--status-not-verified);
+  --color-status-absent-sl: var(--status-absent-sl);
+  --color-status-absent-el: var(--status-absent-el);
+
 }
 
 :root {
@@ -75,7 +79,7 @@
   --muted-foreground: oklch(0.48 0.003 283.53);
   --accent: oklch(0.96 0.02 286.02);
   --accent-foreground: oklch(0.14 0.00 285.82);
-  --destructive: oklch(0.14 0.00 285.82);
+  --destructive: #DC2626;
   --destructive-foreground: oklch(1.00 0 0);
   --border: oklch(0.92 0.00 286.32);
   --input: oklch(0.92 0.00 286.32);
@@ -106,9 +110,12 @@
   --shadow-xl: 0 1px 3px 0px hsl(240 5.88% 90% / 0.10), 0 8px 10px -1px hsl(240 5.88% 90% / 0.10);
   --shadow-2xl: 0 1px 3px 0px hsl(240 5.88% 90% / 0.25);
 
-   /* status colors */
-   --status-active: #008844;
-   --status-inactive: #E68B1C;
+  /* status colors */
+  --status-active: #008844;
+  --status-inactive: #E68B1C;
+  --status-not-verified: #DC2626;
+  --status-absent-sl: #3B82F6;
+  --status-absent-el: #8B5CF6;
 }
 
 .dark {
@@ -157,12 +164,13 @@
   --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 
-   /* status colors */
-   --status-active: #008844;
-   --status-inactive: #E68B1C;
+  /* status colors */
+  --status-active: #008844;
+  --status-inactive: #E68B1C;
+  --status-not-verified: #DC2626;
+  --status-absent-sl: #3B82F6;
+  --status-absent-el: #8B5CF6;
 }
-
-
 
 @layer base {
   * {
@@ -180,9 +188,13 @@
 
 
 /* media queries */
-@media (width >= 96rem /* 1536px */) {
+@media (width >=96rem
+  /* 1536px */
+) {
   .container {
-    max-width: 87.5rem /* 1400px */;
+    max-width: 87.5rem
+      /* 1400px */
+    ;
   }
 }
 

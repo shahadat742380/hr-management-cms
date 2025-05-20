@@ -1,24 +1,18 @@
 // ** Import Schema
 import { z } from "zod";
-import { employees } from "../dummy-data";
+import { salaryData } from "../data";
 
 const responseSchema = z.object({
   success: z.boolean(),
   data: z.array(
     z.object({
       id: z.number(),
-      employeeId: z.string(),
-      name: z.string(),
-      email: z.string(),
-      role: z.string(),
-      joinDate: z.string(),
-      efficiency: z.string(),
-      attendance: z.object({
-        presentDays: z.number(),
-        leaveDays: z.number(),
-      }),
-      monthlySalary: z.number(),
-      status: z.enum(["Active", "Inactive"]),
+      sl_no: z.number(),
+      payslip_id: z.string(),
+      month_year: z.string(),
+      generated_date: z.string(),
+      net_pay: z.number(),
+      status: z.string(),
     })
   ),
   pagination: z.object({
@@ -30,17 +24,17 @@ const responseSchema = z.object({
 });
 
 /**
- * Fetch employees (mocked)
+ * Fetch salary data (mocked)
  */
-export async function fetchEmployees() {
+export async function fetchSalary() {
   // Simulate async fetch
   const page = 1;
-  const limit = employees.length;
-  const total_items = employees.length;
+  const limit = salaryData.length;
+  const total_items = salaryData.length;
   const total_pages = 1;
   const response = {
     success: true,
-    data: employees,
+    data: salaryData,
     pagination: {
       page,
       limit,

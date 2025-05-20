@@ -1,15 +1,19 @@
+"use client";
+
+import React, { Suspense, useState } from "react";
+import SalaryDetailsTable from "./salary-details-data-table";
 import { Typography } from "@/components/typography";
-import React, { Suspense } from "react";
-import EmployeeTable from "./data-table";
 import { IcoHome } from "@/assets/icons";
 import { ChevronRight } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AttachmentDetails from "./attendance-details-data-table";
 
 const EmployeePage = () => {
+  const [activeTab, setActiveTab] = useState("attendance");
   return (
     <main className="container mx-auto section-padding w-full py-8 md:py-10">
       <div>
-        <Tabs defaultValue="attendance" className="w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <IcoHome />
@@ -40,13 +44,13 @@ const EmployeePage = () => {
           </div>
           <div className="mt-4">
             <TabsContent value="attendance">
-              <Suspense fallback={<div>Loading...</div>}>
-                <EmployeeTable />
+              <Suspense fallback={<div>Loading Attachment Details...</div>}>
+                <AttachmentDetails />
               </Suspense>
             </TabsContent>
             <TabsContent value="salary">
-              <Suspense fallback={<div>Loading...</div>}>
-                <EmployeeTable />
+              <Suspense fallback={<div>Loading Employee Table...</div>}>
+                <SalaryDetailsTable />
               </Suspense>
             </TabsContent>
           </div>

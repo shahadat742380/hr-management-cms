@@ -28,9 +28,11 @@ function SelectTrigger({
   className,
   size = "default",
   children,
+  iconClassName,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
-  size?: "sm" | "default"
+  size?: "sm" | "default",
+  iconClassName?: string;
 }) {
   return (
     <SelectPrimitive.Trigger
@@ -44,7 +46,7 @@ function SelectTrigger({
     >
       {children}
       <SelectPrimitive.Icon asChild>
-        <ChevronDownIcon className="size-4 opacity-50" />
+        <ChevronDownIcon className={cn("size-4 opacity-50", iconClassName)} />
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
   )
@@ -101,8 +103,11 @@ function SelectLabel({
 function SelectItem({
   className,
   children,
+  iconClassName,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Item>) {
+}: React.ComponentProps<typeof SelectPrimitive.Item> & {
+  iconClassName?: string;
+}) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -114,7 +119,7 @@ function SelectItem({
     >
       <span className="absolute right-2 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <CheckIcon className={cn("size-4", iconClassName )}/>
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

@@ -4,12 +4,12 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 // ** Import Utils
 import { preprocessSearch } from "@/components/data-table/utils";
-import { fetchEmployees } from "./fetch-attachments";
+import { fetchPayslip } from "./fetch-payslip";
 
 /**
  * Hook to fetch employees with the current filters and pagination
  */
-export function useEmployeesData(
+export function usePayslipData(
   page: number,
   pageSize: number,
   search: string,
@@ -19,7 +19,7 @@ export function useEmployeesData(
 ) {
   return useQuery({
     queryKey: [
-      "employees",
+      "payslip-table",
       page,
       pageSize,
       preprocessSearch(search),
@@ -27,10 +27,11 @@ export function useEmployeesData(
       sortBy,
       sortOrder,
     ],
-    queryFn: () => fetchEmployees(),
+    queryFn: () =>
+      fetchPayslip(),
     placeholderData: keepPreviousData, // Keep previous data when fetching new data. If skeleton animation is needed when fetching data, comment this out.
   });
 }
 
 // Add a property to the function so we can use it with the DataTable component
-useEmployeesData.isQueryHook = true;
+usePayslipData.isQueryHook = true;

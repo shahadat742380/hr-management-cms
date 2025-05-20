@@ -39,10 +39,7 @@ export const ToolbarOptions = ({
 
   return (
     <div className="flex items-center gap-2">
-      <Link href="/add-employee">
-        <Button><CirclePlus className="mr-2 size-4" /> Add New</Button>
-      </Link>
-       
+          
 
       {selectionCount > 0 && (
         <>

@@ -1,22 +1,39 @@
 import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-interface DeletePatientDialogProps {
+interface DialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  fileName: string;
+  onDelete: () => void;
 }
 
-function LogoutDialog({ open, onOpenChange }: DeletePatientDialogProps) {
+const ChangeStatusDialog = ({
+  open,
+  onOpenChange,
+  fileName,
+  onDelete,
+}: DialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md w-full p-6">
         <DialogHeader>
-          <DialogTitle className="text-primary">Confirm Logout!</DialogTitle>
+          <DialogTitle>Change Status?</DialogTitle>
         </DialogHeader>
         <div className="mt-2 text-base text-foreground">
-        You are about to logout of the system. Ensure all your changes are saved before
-        proceeding.
+          Are you sure you want to change the{" "}
+          <span className="text-primary font-medium">
+            &quot;{fileName}&quot;
+          </span>{" "}
+          status?
         </div>
         <DialogFooter className="flex flex-row justify-end gap-2">
           <DialogClose asChild>
@@ -24,13 +41,13 @@ function LogoutDialog({ open, onOpenChange }: DeletePatientDialogProps) {
               Cancel
             </Button>
           </DialogClose>
-          <Button>
-            Logout
+          <Button onClick={onDelete} type="button">
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
-}
+};
 
-export default LogoutDialog;
+export default ChangeStatusDialog;

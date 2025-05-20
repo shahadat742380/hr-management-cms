@@ -6,14 +6,14 @@ import { ToolbarOptions } from "./components/toolbar-options";
 // ** imports Types & Utils
 import { getColumns } from "./components/columns";
 import { useExportConfig } from "./utils/config";
-import { useEmployeesData } from "./utils/data-fetching";
-import { Employee } from "./dummy-data";
+import { useSalaryData } from "./utils/data-fetching";
+import { SalarySlipDetail } from "./data";
 
-const EmployeeTable = () => {
+const SalaryDetailsTable = () => {
   return (
-    <DataTable<Employee, unknown>
+    <DataTable<SalarySlipDetail, unknown>
       getColumns={getColumns}
-      fetchDataFn={useEmployeesData}
+      fetchDataFn={useSalaryData}
       exportConfig={useExportConfig()}
       idField="id"
       pageSizeOptions={[10, 20, 30, 40, 50, 100, 150]}
@@ -26,7 +26,7 @@ const EmployeeTable = () => {
         <ToolbarOptions
           selectedUsers={selectedRows.map((row) => ({
             id: row.id,
-            name: row.name,
+            name: row.month_year,
           }))}
           allSelectedUserIds={allSelectedIds}
           totalSelectedCount={totalSelectedCount}
@@ -48,4 +48,4 @@ const EmployeeTable = () => {
   );
 };
 
-export default EmployeeTable;
+export default SalaryDetailsTable;

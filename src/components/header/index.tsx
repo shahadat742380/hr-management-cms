@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // components/header/index.tsx
 "use client";
 
 // ** Core React and Next.js imports
-import { ReactElement, useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -40,9 +41,8 @@ const navItems: NavItem[] = [
   },
   {
     label: "Payslip Generator",
-    link: "#",
+    link: "/auto-payslip-generator",
   },
- 
 ];
 
 export function Header() {
@@ -67,7 +67,13 @@ export function Header() {
             <nav className="hidden lg:block">
               <ul className="flex items-center gap-4">
                 {navItems.map((item, idx) => {
-                  const isActive = usePathname() === item.link;
+                  const pathname = usePathname();
+                  const isActive =
+                    item.label === "Payslip Generator"
+                      ? pathname === "/auto-payslip-generator" ||
+                        pathname === "/manual-payslip-generator" ||
+                        pathname === "/payslip-generation-log"
+                      : pathname === item.link;
                   return (
                     <li key={item.label} className="flex items-center">
                       <Link

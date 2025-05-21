@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import * as React from "react";
 
 // ** Import 3rd Party Libs
@@ -23,6 +22,7 @@ import {
 // ** Import Actions
 import DeleteFileDialog from "./actions/delete-file-dialog";
 import EditEmployeeDialog from "./actions/edit-employee-dialog.tsx";
+import ChangeStatusDialog from "./actions/status-change-dialog";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -35,6 +35,7 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [editDialogOpen, setEditDialogOpen] = React.useState(false);
+  const [statusDialogOpen, setStatusDialogOpen] = React.useState(false);
   const fileName = (row.original as any)?.fileName || "";
 
   return (
@@ -59,8 +60,12 @@ export function DataTableRowActions<TData>({
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-              <DropdownMenuItem>Active</DropdownMenuItem>
-              <DropdownMenuItem>Inactive</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setStatusDialogOpen(true)}>
+                Active
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setStatusDialogOpen(true)}>
+                Inactive
+              </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         </DropdownMenuContent>
@@ -78,6 +83,10 @@ export function DataTableRowActions<TData>({
       <EditEmployeeDialog
         open={editDialogOpen}
         onOpenChange={setEditDialogOpen}
+      />
+      <ChangeStatusDialog
+        open={statusDialogOpen}
+        onOpenChange={setStatusDialogOpen}
       />
     </>
   );

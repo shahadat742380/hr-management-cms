@@ -1,10 +1,12 @@
+// ** imports core packages
+import { Suspense } from "react";
+
 // ** imports components
 import { DateRangePicker } from "@/components/date-range-picker";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import InfoSection from "./_components/info-section";
 import ChartsSection from "./_components/charts-section";
-import { Suspense } from "react";
 
 const DashboardPage = () => {
   return (

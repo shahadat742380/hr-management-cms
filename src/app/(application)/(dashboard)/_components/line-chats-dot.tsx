@@ -21,6 +21,14 @@ import { format } from "date-fns";
 
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 // ** Chart data
 const chartData = [
@@ -49,7 +57,12 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
+
 export function LineChartDots() {
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+
   return (
     <Card>
       <CardHeader>
@@ -63,19 +76,26 @@ export function LineChartDots() {
                 variant="outline"
                 className="bg-white w-40 hover:bg-white/80 justify-between"
               >
-                {format(new Date(), "dd MMM yyyy")}
+                {selectedYear}
                 <CalendarIcon className="ml-2 h-4 w-4" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <CalendarComponent
-                mode="single"
-                selected={new Date()}
-                onSelect={() => {}}
-                initialFocus
-                
-                className="p-3 pointer-events-auto"
-              />
+            <PopoverContent className="w-auto p-4">
+              <Select
+                value={selectedYear.toString()}
+                onValueChange={(val) => setSelectedYear(Number(val))}
+              >
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Select year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {years.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </PopoverContent>
           </Popover>
         </div>

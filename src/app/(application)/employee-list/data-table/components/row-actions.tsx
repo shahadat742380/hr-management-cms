@@ -22,6 +22,7 @@ import {
 
 // ** Import Actions
 import DeleteFileDialog from "./actions/delete-file-dialog";
+import EditEmployeeDialog from "./actions/edit-employee-dialog.tsx";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -33,6 +34,7 @@ export function DataTableRowActions<TData>({
   table,
 }: DataTableRowActionsProps<TData>) {
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [editDialogOpen, setEditDialogOpen] = React.useState(false);
   const fileName = (row.original as any)?.fileName || "";
 
   return (
@@ -48,7 +50,9 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
+            Edit
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteDialogOpen(true)}>
             Delete
           </DropdownMenuItem>
@@ -70,6 +74,10 @@ export function DataTableRowActions<TData>({
           setDeleteDialogOpen(false);
           // Optionally: handle file removal here
         }}
+      />
+      <EditEmployeeDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
       />
     </>
   );

@@ -39,8 +39,6 @@ export function DataTablePagination<TData>({
   pageSizeOptions = [10, 20, 30, 40, 50], // Default options if none provided
   size = 'default'
 }: DataTablePaginationProps<TData>) {
-  // Convert 'lg' size to 'default' for SelectTrigger since it only accepts 'sm' | 'default'
-  const selectSize = size === 'lg' ? 'default' : size;
 
   return (
     <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-2 py-1 sm:flex-row sm:gap-8">

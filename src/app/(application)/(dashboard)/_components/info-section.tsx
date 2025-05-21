@@ -1,5 +1,3 @@
-// ** import third party packages
-import { Users, UserCheck, FileCheck, FileText } from "lucide-react";
 
 // ** import components
 import { Typography } from "@/components/typography";

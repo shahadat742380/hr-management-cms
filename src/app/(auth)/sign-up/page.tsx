@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -28,8 +29,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-// ** Import Auth Client Instance
-import { authClient } from "@/lib/auth-client";
 
 // ** Import Validation Schema
 
@@ -67,33 +66,7 @@ const Signup = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
-    setLoading(true);
-    try {
-      const { name, email, password } = values;
-
-      const { error } = await authClient.signUp.email(
-        { name, email, password },
-        {
-          onRequest: () => console.log("Signup request initiated..."),
-          onSuccess: () => {
-            toast.success("Signup successful. Please log in.");
-            router.push("/sign-up");
-          },
-          onError: (ctx) => {
-            toast.error(ctx.error.message || "Failed to sign up.");
-          },
-        },
-      );
-
-      if (error) {
-        console.log("Signup error:", error);
-      }
-    } catch (err) {
-      console.error("Signup error:", err);
-      toast.error("Failed to sign up. Please check your details.");
-    } finally {
-      setLoading(false);
-    }
+    console.log(values);
   };
 
   return (

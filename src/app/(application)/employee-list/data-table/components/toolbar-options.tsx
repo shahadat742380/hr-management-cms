@@ -8,11 +8,11 @@ import { CirclePlus, TrashIcon } from "lucide-react";
 // ** Import UI Components
 import { Button } from "@/components/ui/button";
 import DeleteFileDialog from "./actions/delete-file-dialog";
-import Link from "next/link";
+import AddEmployeeDialog from "./actions/add-employee-dialog";
+
+
 
 // ** Import Actions
-// import { AddUserPopup } from "./actions/add-user-popup";
-// import { BulkDeletePopup } from "./actions/bulk-delete-popup";
 
 interface ToolbarOptionsProps {
   // Current page selected users with name data
@@ -30,18 +30,23 @@ export const ToolbarOptions = ({
   totalSelectedCount,
   resetSelection,
 }: ToolbarOptionsProps) => {
+  const [addEmployeeDialogOpen, setAddEmployeeDialogOpen] =
+    React.useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
   // Use total selected count if available, otherwise fall back to current page selection
   const selectionCount = totalSelectedCount || selectedUsers.length;
 
-  
-
   return (
     <div className="flex items-center gap-2">
-      <Link href="/add-employee">
-        <Button><CirclePlus className="mr-2 size-4" /> Add New</Button>
-      </Link>
+      <Button
+        onClick={() => {
+          console.log("Add New button clicked");
+          setAddEmployeeDialogOpen(true);
+        }}
+      >
+        <CirclePlus className="mr-2 size-4" /> Add New
+      </Button>
 
       {selectionCount > 0 && (
         <>
@@ -65,6 +70,10 @@ export const ToolbarOptions = ({
           />
         </>
       )}
+      <AddEmployeeDialog
+        open={addEmployeeDialogOpen}
+        onOpenChange={setAddEmployeeDialogOpen}
+      />
     </div>
   );
 };

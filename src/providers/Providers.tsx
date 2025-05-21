@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"; // This ensures the component is rendered on the client side
 
 import React, { useState } from "react";

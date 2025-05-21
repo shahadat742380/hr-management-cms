@@ -55,6 +55,8 @@ const CheckPayslipGenerationDialog = ({ open, onOpenChange }: DialogProps) => {
     setIsSuccessfulDialogOpen(true);
   };
 
+  const allChecked = Object.values(checklist).every(Boolean);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-full !max-w-3xl overflow-hidden p-6 sm:p-8 ">
@@ -72,7 +74,7 @@ const CheckPayslipGenerationDialog = ({ open, onOpenChange }: DialogProps) => {
             </div>
             <div className="text-center space-y-2">
               <Typography variant="Bold_H3" className="text-primary">
-                Review Before Generating Payslips
+                Final Review Before Payslip
               </Typography>
               <Typography
                 variant="Regular_P"
@@ -176,7 +178,9 @@ const CheckPayslipGenerationDialog = ({ open, onOpenChange }: DialogProps) => {
               Go Back
             </Button>
           </DialogClose>
-          <Button onClick={handleGenerateClick}>Generate Payslips</Button>
+          <Button onClick={handleGenerateClick} disabled={!allChecked}>
+            Generate Payslips
+          </Button>
         </DialogFooter>
       </DialogContent>
       <ConfirmDialog

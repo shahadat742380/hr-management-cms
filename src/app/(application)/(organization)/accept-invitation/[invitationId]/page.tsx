@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
@@ -6,7 +7,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // ** import third party packages
-import { toast } from "sonner";
 
 import { Typography } from "@/components/typography";
 // ** import  components

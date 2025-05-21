@@ -1,6 +1,6 @@
 // ** import components
 import { Separator } from "@/components/ui/separator";
-import { AccountSetting } from "./account-setting";
+import { AccountSetting } from "./brand-setting";
 
 export default function SettingsProfilePage() {
   return (

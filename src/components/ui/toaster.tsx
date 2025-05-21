@@ -7,7 +7,6 @@ type ToasterProps = React.ComponentProps<typeof Sonner>;
 function Toaster({ ...props }: ToasterProps) {
   return (
     <Sonner
-      // eslint-disable-next-line tailwindcss/no-custom-classname
       className="toaster group"
       toastOptions={{
         classNames: {

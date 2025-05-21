@@ -25,6 +25,7 @@ import { DataTableRowActions } from "./row-actions";
 import { cn } from "@/lib/utils";
 import { AttendanceDetail } from "../data";
 import ChangeStatusDialog from "./actions/change-status-dialog";
+import ChangeVerificationStatusDialog from "./actions/change-verification-status-dialog.tsx";
 
 // Define type for attendance status
 type AttendanceStatus =
@@ -205,7 +206,7 @@ const VerificationStatusCell: React.FC<VerificationStatusCellProps> = ({
   return (
     <div>
       {/* Dialog Component */}
-      <ChangeStatusDialog
+      <ChangeVerificationStatusDialog
         open={showDialog}
         onOpenChange={handleCancelChange} // Use handleCancelChange for closing the dialog
         onDelete={handleConfirmChange} // Map onDelete to handleConfirmChange

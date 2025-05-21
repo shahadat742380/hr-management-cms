@@ -12,7 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Dialog } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import LogoutDialog from "../dialog/log-out-dialog";
 

@@ -3,7 +3,7 @@
 "use client";
 
 // ** Core React and Next.js imports
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,6 +20,8 @@ import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import { IcoSidebarLogo } from "@/assets/icons";
 import MenuSidebar from "../layout/menu-sidebar";
+import { authClient } from "@/lib/auth-client";
+import axiosInstance from "@/config/axios";
 
 // ** Types
 interface NavItem {
@@ -46,7 +48,28 @@ const navItems: NavItem[] = [
 ];
 
 export function Header() {
+  const { data: session } = authClient.useSession();
+  const pathname = usePathname();
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const response = await axiosInstance.get("/user/user-org-role");
+        if (response.data.success) {
+          setUserRole(response.data.data.role);
+        } else {
+          setUserRole("No Role");
+          console.warn("Failed to fetch user role:", response.data.message);
+        }
+      } catch (error) {
+        setUserRole("No Role");
+        console.warn("Error fetching user role:", error);
+      }
+    };
+    fetchUserRole();
+  }, []);
 
   return (
     <>
@@ -64,10 +87,10 @@ export function Header() {
             </div>
 
             {/* Nav links */}
+            <Suspense fallback={<div className="h-12" />}>
             <nav className="hidden lg:block">
               <ul className="flex items-center gap-4">
                 {navItems.map((item, idx) => {
-                  const pathname = usePathname();
                   const isActive =
                     item.label === "Payslip Generator"
                       ? pathname === "/auto-payslip-generator" ||
@@ -98,6 +121,7 @@ export function Header() {
                 })}
               </ul>
             </nav>
+            </Suspense>
 
             {/* User Profile & Theme Toggle */}
             <div
@@ -109,16 +133,16 @@ export function Header() {
                   variant="Medium_H5"
                   className="block text-primary-foreground"
                 >
-                  user name
+                   {session?.user?.name}
                 </Typography>
                 <Typography
                   variant="Regular_H7"
                   className="block text-primary-foreground capitalize"
                 >
-                  user role
+                  {userRole}
                 </Typography>
               </div>
-              <UserNav />
+              <UserNav image={session?.user?.image ?? undefined} />
               <ThemeToggle />
             </div>
           </div>

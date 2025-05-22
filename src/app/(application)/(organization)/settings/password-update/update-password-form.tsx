@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 // ** Zod Schema
 const profileFormSchema = z
@@ -72,6 +74,21 @@ export function UpdatePasswordForm() {
 
   async function onSubmit(data: ProfileFormValues) {
     console.log(data);
+    try {
+      setPasswordLoading(true);
+      await authClient.changePassword({
+        currentPassword: data.old_password,
+        newPassword: data.new_password,
+        revokeOtherSessions: true, // Revokes all other sessions after password change
+      });
+      form.reset();
+      toast.success("Password update successfully.");
+    } catch (error) {
+      console.error("Failed to change password:", error);
+      alert("Failed to change password. Please try again.");
+    } finally {
+      setPasswordLoading(false);
+    }
   }
 
   return (

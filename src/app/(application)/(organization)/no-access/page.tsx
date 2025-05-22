@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client"; // Assuming this is your auth library
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -10,8 +10,16 @@ const NoAccessPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const logout = async () => {
-   console.log("logout successfully!")
-    
+    setIsLoading(true); // Start loading state
+    try {
+      await authClient.signOut();
+      // Redirect to login page
+      router.push("/login");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    } finally {
+      setIsLoading(false); // Reset loading state
+    }
   };
   return (
     <main className="flex h-[70vh] items-center justify-center">
@@ -25,7 +33,14 @@ const NoAccessPage = () => {
         </Typography>
 
         <Button variant="default" className="w-full" onClick={logout} disabled={isLoading}>
-          {isLoading ? "Logging out..." : "Log out"}
+          {isLoading ? (
+            <div className="flex items-center justify-center gap-2">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              Logging out...
+            </div>
+          ) : (
+            "Log out"
+          )}
         </Button>
       </div>
     </main>

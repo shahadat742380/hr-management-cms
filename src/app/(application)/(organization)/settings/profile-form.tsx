@@ -2,10 +2,11 @@
 "use client";
 
 // ** import core package
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
+
 // ** import third party package
 import { toast } from "sonner";
 import { z } from "zod";
@@ -22,6 +23,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { authClient } from "@/lib/auth-client";
+import axiosInstance from "@/config/axios";
 
 // Define validation schema
 const profileFormSchema = z.object({
@@ -50,10 +53,9 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function ProfileForm() {
+  const { data: session } = authClient.useSession();
   const [loading, setLoading] = useState(false);
   const [profileImg, setProfileImg] = useState("");
-
-  console.log("Profile Image:", profileImg);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
@@ -67,8 +69,36 @@ export function ProfileForm() {
     },
   });
 
+  // Update form values when session is loaded
+  useEffect(() => {
+    if (session?.user) {
+      form.reset({
+        phone_no: session.user.phoneNumber || "",
+        name: session.user.name,
+        email: session.user.email,
+        author_image: session.user.image || "",
+        role: session.user.role || "",
+      });
+      setProfileImg(session?.user?.image || "");
+    }
+  }, [session, form, session?.user?.image]);
+
   async function onSubmit(data: ProfileFormValues) {
-    console.log(data);
+    toast.success("Profile updated successfully.");
+    setLoading(true);
+
+    try {
+      await authClient.updateUser({
+        name: data.name,
+        phoneNumber: data.phone_no,
+      });
+      toast.success("Profile updated successfully.");
+    } catch (error) {
+      console.error("Failed to update name:", error);
+      toast.error("Failed to update profile.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -84,11 +114,42 @@ export function ProfileForm() {
               <ImageUpload
                 initialImage={field.value || profileImg}
                 onUpdate={async (file) => {
-                  console.log("File uploaded:", field.value);
+                  const formData = new FormData();
+                  formData.append("profilePic", file); // append the file directly
+
+                  try {
+                    const res = await axiosInstance.put(
+                      "/user/update-profile-picture",
+                      formData, // Send the FormData directly
+                      {
+                        headers: {
+                          "Content-Type": "multipart/form-data", // Ensure the correct content type for form data
+                        },
+                      },
+                    );
+
+                    const profilePic = res.data.profilePicUrl;
+
+                    console.log("Profile Picture:", profilePic);
+                    if (profilePic) {
+                      authClient.updateUser({
+                        image: profilePic,
+                      });
+                      setProfileImg(profilePic);
+                      toast.success(res.data.message);
+                    } else {
+                      toast.error(res.data.message);
+                    }
+                  } catch (error) {
+                    console.error("Error uploading file:", error);
+                    toast.error(`Error uploading file: ${error}`);
+                  }
                 }}
                 onRemove={() => {
                   field.onChange("");
-
+                  authClient.updateUser({
+                    image: "",
+                  });
                   setProfileImg("/image-placeholder.png");
                   toast.success("Profile picture removed successfully.");
                 }}

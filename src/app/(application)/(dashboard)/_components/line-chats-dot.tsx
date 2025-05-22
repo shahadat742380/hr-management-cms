@@ -1,7 +1,11 @@
 "use client";
 
+// ** import core packages
+import { useState } from "react";
+
 // ** import third party packages
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { Calendar as CalendarIcon } from "lucide-react";
 
 // ** import components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,12 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
-import { format } from "date-fns";
-
-import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import {
   Select,
   SelectTrigger,
@@ -48,13 +47,10 @@ const chartData = [
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Document",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
+  
 } satisfies ChartConfig;
 
 const currentYear = new Date().getFullYear();
@@ -137,18 +133,7 @@ export function LineChartDots() {
                 r: 6,
               }}
             />
-            <Line
-              dataKey="mobile"
-              type="natural"
-              stroke="var(--color-chart-2)"
-              strokeWidth={2}
-              dot={{
-                fill: "var(--color-chart-2)",
-              }}
-              activeDot={{
-                r: 6,
-              }}
-            />
+           
           </LineChart>
         </ChartContainer>
       </CardContent>

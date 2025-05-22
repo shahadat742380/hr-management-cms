@@ -35,6 +35,9 @@ import bannerImage from "@/assets/images/auth/login.webp";
 
 // ** Import Validation Schema
 import { loginSchema } from "@/schemas";
+import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const router = useRouter();
@@ -51,7 +54,37 @@ const Login = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    setLoading(true);
+    try {
+      const { email, password } = values;
+
+      const { error } = await authClient.signIn.email(
+        { email, password },
+        {
+          onRequest: () => console.log("Request initiated..."),
+          onSuccess: () => {
+            toast.success("Sign-in successful.");
+            router.push("/");
+          },
+          onError: (error: { error: { message?: string } }) => {
+            console.error(error.error);
+            toast.error(error.error.message || "Failed to sign in. Please try again.");
+            throw new Error(error.error.message || "An error occurred.");
+          },
+        },
+      );
+
+      if (error) {
+        console.error(error);
+        toast.error(error.message);
+        throw new Error(error.message);
+      }
+    } catch (err) {
+      console.error("Sign-in error:", err);
+      toast.error("Failed to sign in. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -148,7 +181,14 @@ const Login = () => {
 
           {/* Submit Button */}
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Signing in..." : "Sign in"}
+          {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </Button>
         </form>
       </Form>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
@@ -7,15 +6,18 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // ** import third party packages
+import { toast } from "sonner";
 
 import { Typography } from "@/components/typography";
 // ** import  components
 import { Button } from "@/components/ui/button";
 
 // ** import auth client instance
+import { authClient } from "@/lib/auth-client";
 
 const AcceptInvitation = () => {
   const router = useRouter();
+  const { data: session } = authClient.useSession();
   const pathname = usePathname();
   const [invitationId, setInvitationId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,8 +39,10 @@ const AcceptInvitation = () => {
       }
     }
 
-    
-  }, [pathname, router]);
+    if (!session) {
+      router.push("/sign-in");
+    }
+  }, [pathname, session, router]);
 
   const clearInvitationId = () => {
     // Safe localStorage usage
@@ -49,12 +53,58 @@ const AcceptInvitation = () => {
 
   // Accept invitation
   const handleAccept = async () => {
-  
+    if (!invitationId) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await authClient.organization.acceptInvitation({
+        invitationId,
+      });
+
+      if (error) {
+        throw new Error(error.message || "Failed to accept invitation.");
+      }
+
+      toast.success("Invitation accepted successfully!");
+      clearInvitationId();
+      router.push("/"); // Redirect after accepting
+    } catch (err) {
+      console.error("Error accepting invitation:", err);
+      setError("Failed to accept invitation. Please try again.");
+      toast.error("Failed to accept invitation.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Reject invitation
   const handleReject = async () => {
-   
+    if (!invitationId) return;
+
+    setRejecting(true);
+    setError(null);
+
+    try {
+      const { error } = await authClient.organization.rejectInvitation({
+        invitationId,
+      });
+
+      if (error) {
+        throw new Error(error.message || "Failed to reject invitation.");
+      }
+
+      toast.success("Invitation rejected successfully.");
+      clearInvitationId();
+      router.push("/"); // Redirect after rejecting
+    } catch (err) {
+      console.error("Error rejecting invitation:", err);
+      setError("Failed to reject invitation. Please try again.");
+      toast.error("Failed to reject invitation.");
+    } finally {
+      setRejecting(false);
+    }
   };
 
   return (

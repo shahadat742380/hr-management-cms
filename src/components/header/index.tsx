@@ -23,6 +23,7 @@ import { IcoSidebarLogo } from "@/assets/icons";
 import MenuSidebar from "../layout/menu-sidebar";
 import { authClient } from "@/lib/auth-client";
 import axiosInstance from "@/config/axios";
+import { LogoSmall } from "@/assets/icons/logo-small";
 
 // ** Types
 interface NavItem {
@@ -84,7 +85,8 @@ export function Header() {
               >
                 <Menu className="h-8 w-8 text-primary-foreground" />
               </div>
-              <IcoSidebarLogo className="text-primary-foreground" />
+              <IcoSidebarLogo className="text-primary-foreground hidden md:block" />
+              <LogoSmall className="text-primary-foreground block md:hidden h-8" />
             </div>
 
             {/* Nav links */}

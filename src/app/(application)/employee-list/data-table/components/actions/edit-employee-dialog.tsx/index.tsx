@@ -126,12 +126,12 @@ const EditEmployeeDialog = ({ open, onOpenChange }: DialogProps) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <Tabs defaultValue={tabsData[0].value} className="w-full">
-                <TabsList className=" w-full flex-wrap">
+                <TabsList className=" w-full flex-wrap !h-auto">
                   {tabsData.map((tab) => (
                     <TabsTrigger
                       key={tab.value}
                       value={tab.value}
-                      className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                      className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground !py-2"
                     >
                       {tab.label}
                     </TabsTrigger>

@@ -69,11 +69,11 @@ const QueryProvider: React.FC<{ children: React.ReactNode }> = ({
                 className="flex items-center justify-end gap-4"
                 aria-label="User controls"
               >
-                <div className="text-right space-y-2">
+                <div className="text-right ">
                   <Skeleton className="h-5 w-24" />
-                  <Skeleton className="h-4 w-16" />
+                  <Skeleton className="h-4 w-16 ml-auto mt-1" />
                 </div>
-                <Skeleton className="h-10 w-10 rounded-full" />
+                <Skeleton className="h-8 w-8 rounded-full" />
               </div>
             </div>
           </div>

@@ -87,11 +87,12 @@ export function BrandSetting() {
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-x-10">
+        
         {/* Upload Company Logo */}
         <div className="space-y-2">
           <Label htmlFor="company-logo">Upload Company Logo</Label>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <input
               id="company-logo-hidden"
               type="file"
@@ -114,9 +115,9 @@ export function BrandSetting() {
               placeholder="Company Logo"
               value={logoFileName}
               readOnly
-              className="flex-grow"
+              className="flex-grow rounded-r-none"
             />
-            <Button type="button" onClick={handleBrowseClick}>
+            <Button type="button" onClick={handleBrowseClick} className="bg-primary/20 text-primary rounded-l-none hover:bg-primary/10">
               Browse
             </Button>
           </div>
@@ -131,7 +132,7 @@ export function BrandSetting() {
               type="color"
               value={color}
               onChange={(e) => handleChange(e)}
-              className="w-12 h-10 p-0 border-none"
+              className="w-20 h-10 p-0 border-none"
             />
             <Input value={color} readOnly className="flex-grow" />
           </div>

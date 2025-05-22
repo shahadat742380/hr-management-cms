@@ -84,7 +84,6 @@ export function ProfileForm() {
   }, [session, form, session?.user?.image]);
 
   async function onSubmit(data: ProfileFormValues) {
-    toast.success("Profile updated successfully.");
     setLoading(true);
 
     try {
@@ -194,7 +193,7 @@ export function ProfileForm() {
                     placeholder="Enter your email"
                     {...field}
                     value={field.value ?? ""}
-                    className="w-full disabled:bg-muted disabled:text-foreground disabled:opacity-100"
+                    className="w-full disabled:bg-primary/10 disabled:text-foreground disabled:opacity-100"
                   />
                 </FormControl>
                 <FormMessage />
@@ -237,7 +236,7 @@ export function ProfileForm() {
                     placeholder="Enter your email"
                     {...field}
                     value={field.value ?? "Admin"}
-                    className="w-full capitalize disabled:bg-muted disabled:text-foreground disabled:opacity-100"
+                    className="w-full capitalize disabled:bg-primary/10 disabled:text-foreground disabled:opacity-100"
                   />
                 </FormControl>
                 <FormMessage />

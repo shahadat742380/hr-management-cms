@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import { Typography } from "@/components/typography";
 import { UserNav } from "./user";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // ** Icons
 
@@ -83,44 +84,44 @@ export function Header() {
               >
                 <Menu className="h-8 w-8 text-primary-foreground" />
               </div>
-              <IcoSidebarLogo />
+              <IcoSidebarLogo className="text-primary-foreground" />
             </div>
 
             {/* Nav links */}
             <Suspense fallback={<div className="h-12" />}>
-            <nav className="hidden lg:block">
-              <ul className="flex items-center gap-4">
-                {navItems.map((item, idx) => {
-                  const isActive =
-                    item.label === "Payslip Generator"
-                      ? pathname === "/auto-payslip-generator" ||
-                        pathname === "/manual-payslip-generator" ||
-                        pathname === "/payslip-generation-log"
-                      : pathname === item.link;
-                  return (
-                    <li key={item.label} className="flex items-center">
-                      <Link
-                        href={item.link}
-                        className={cn(
-                          "px-6 py-2 font-medium text-primary-foreground",
-                          isActive
-                            ? "rounded-full bg-primary-foreground/40  font-medium "
-                            : " font-medium "
+              <nav className="hidden lg:block">
+                <ul className="flex items-center gap-4">
+                  {navItems.map((item, idx) => {
+                    const isActive =
+                      item.label === "Payslip Generator"
+                        ? pathname === "/auto-payslip-generator" ||
+                          pathname === "/manual-payslip-generator" ||
+                          pathname === "/payslip-generation-log"
+                        : pathname === item.link;
+                    return (
+                      <li key={item.label} className="flex items-center">
+                        <Link
+                          href={item.link}
+                          className={cn(
+                            "px-6 py-2 font-medium text-primary-foreground",
+                            isActive
+                              ? "rounded-full bg-primary-foreground/40  font-medium "
+                              : " font-medium "
+                          )}
+                        >
+                          {item.label}
+                        </Link>
+                        {idx < navItems.length - 1 && (
+                          <span
+                            className="ml-4 h-6 w-px bg-primary-foreground/40"
+                            aria-hidden="true"
+                          />
                         )}
-                      >
-                        {item.label}
-                      </Link>
-                      {idx < navItems.length - 1 && (
-                        <span
-                          className="ml-4 h-6 w-px bg-primary-foreground/40"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
             </Suspense>
 
             {/* User Profile & Theme Toggle */}
@@ -129,20 +130,33 @@ export function Header() {
               aria-label="User controls"
             >
               <div className="text-right">
-                <Typography
-                  variant="Medium_H5"
-                  className="block text-primary-foreground"
-                >
-                   {session?.user?.name}
-                </Typography>
-                <Typography
-                  variant="Regular_H7"
-                  className="block text-primary-foreground capitalize"
-                >
-                  {userRole}
-                </Typography>
+                {session ? (
+                  <>
+                    <Typography
+                      variant="Medium_H5"
+                      className="block text-primary-foreground"
+                    >
+                      {session?.user?.name || "User name"}
+                    </Typography>
+                    <Typography
+                      variant="Regular_H7"
+                      className="block text-primary-foreground capitalize"
+                    >
+                      {userRole || "No Role"}
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Skeleton className="h-5 w-24" />
+                    <Skeleton className="h-4 w-16 ml-auto mt-1" />
+                  </>
+                )}
               </div>
-              <UserNav image={session?.user?.image ?? undefined} />
+              {session ? (
+                <UserNav image={session?.user?.image ?? undefined} />
+              ) : (
+                <Skeleton className="h-8 w-8 rounded-full" />
+              )}
               <ThemeToggle />
             </div>
           </div>

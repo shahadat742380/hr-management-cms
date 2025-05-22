@@ -33,11 +33,11 @@ export function ThemeToggle() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative h-8 w-8 border-0 text-white outline-none ring-0 focus:shadow-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-primary"
+          className="relative h-8 w-8 border-0  outline-none ring-0 focus:shadow-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-primary hover:bg-transparent"
           style={{ boxShadow: "none" }}
         >
-          <Sun className="dark:-rotate-90 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <Sun className="dark:-rotate-90 text-white h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] text-white w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
